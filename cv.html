@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcours — Misha Dopre</title>
+    <meta name="description" content="Formation et expériences de Misha Dopre, étudiant à CESI Nice">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        
+        .cv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: start;
+        }
+
+        .cv-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            padding: var(--space-lg);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            margin-bottom: var(--space-xl);
+        }
+
+        [data-theme="dark"] .cv-card {
+            background: var(--bg-secondary);
+            border-color: var(--border-light);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .cv-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.75rem;
+        }
+
+        .cv-section-title i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .cv-timeline-item {
+            margin-bottom: var(--space-lg);
+            position: relative;
+            padding-left: 1rem;
+            border-left: 3px solid var(--accent-soft);
+        }
+
+        .cv-timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-timeline-title {
+            font-size: 1.2rem;
+            font-weight: 650;
+            color: var(--text-primary);
+        }
+
+        .cv-timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            background: var(--accent-soft);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+
+        .cv-timeline-sub {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        
+        .cv-lang-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            background: var(--bg-secondary);
+            padding: var(--space-lg);
+            border-radius: var(--radius);
+            border: 1px dashed var(--border);
+        }
+
+        .cv-lang-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cv-lang-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-lang-level {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        
+        .cv-skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+        }
+
+        .cv-skills-category h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cv-skills-category h4 i {
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .cv-skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .cv-skill-tag {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .cv-skill-tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateY(-1px);
+        }
+
+        
+        .cv-engagement {
+            background: var(--accent-soft);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius);
+            padding: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cv-engagement:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45,106,79,0.15);
+        }
+
+        .cv-engagement-icon {
+            background: var(--accent);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .cv-engagement-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-engagement-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-engagement-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        
+        .cv-social {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .cv-social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .cv-social-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        @media (max-width: 768px) {
+            .cv-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+            
+            .cv-lang-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cv-skills-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">M.D.</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="cv.html" class="active">Parcours</a></li>
+                <li><a href="projets.html">Projets</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="theme-switch">
+                    <i class="fas fa-sun active"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- En-tête -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2xl); flex-wrap: wrap; gap: var(--space-md);">
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Parcours</h1>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Formation · Expériences · Compétences</p>
+            </div>
+            <div>
+                <a href="cv/cv-misha-dopre.pdf" download class="btn btn-primary">
+                    <i class="fas fa-file-pdf"></i> Télécharger CV
+                </a>
+            </div>
+        </div>
+
+        <!-- GRILLE PRINCIPALE -->
+        <div class="cv-grid">
+            <!-- COLONNE GAUCHE -->
+            <div>
+                
+                <div class="cv-card">
+                    <h2 class="cv-section-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        Formation
+                    </h2>
+                    
+                    <div class="cv-timeline-item">
+                        <div class="cv-timeline-header">
+                            <span class="cv-timeline-title">Cycle préparatoire intégré</span>
+                            <span class="cv-timeline-date">2024-2026</span>
+                        </div>
+                        <div class="cv-timeline-sub">CESI École d'ingénieurs, Nice</div>
+                        <div class="cv-timeline-desc">Spécialité informatique · Programmation, bases de données, systèmes embarqués, réseaux</div>
+                    </div>
+
+                    <div class="cv-timeline-item" style="margin-bottom: 0;">
+                        <div class="cv-timeline-header">
+                            <span class="cv-timeline-title">Baccalauréat général</span>
+                            <span class="cv-timeline-date">2024</span>
+                        </div>
+                        <div class="cv-timeline-sub">Lycée Dominique Villars, Gap</div>
+                        <div class="cv-timeline-desc">Mention bien · Spécialités mathématiques et physique-chimie</div>
+                    </div>
+                </div>
+
+                
+                <div style="margin-bottom: var(--space-xl);">
+                    <h2 class="cv-section-title">
+                        <i class="fas fa-language"></i>
+                        Langues
+                    </h2>
+                    <div class="cv-lang-grid">
+                        <div class="cv-lang-item">
+                            <span class="cv-lang-name">Français</span>
+                            <span class="cv-lang-level">Langue maternelle</span>
+                        </div>
+                        <div class="cv-lang-item">
+                            <span class="cv-lang-name">Anglais</span>
+                            <span class="cv-lang-level">Niveau B1-B2</span>
+                        </div>
+                        <div class="cv-lang-item">
+                            <span class="cv-lang-name">Italien</span>
+                            <span class="cv-lang-level">Niveau B1</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div style="margin-bottom: var(--space-xl);">
+                    <h2 class="cv-section-title">
+                        <i class="fas fa-heart"></i>
+                        Intérêts
+                    </h2>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--bg-card); padding: 0.5rem 1.25rem; border-radius: 9999px; border: 1px solid var(--border);">
+                            <i class="fas fa-music" style="color: var(--accent);"></i>
+                            <span style="color: var(--text-secondary);">Piano</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--bg-card); padding: 0.5rem 1.25rem; border-radius: 9999px; border: 1px solid var(--border);">
+                            <i class="fas fa-person-skiing" style="color: var(--accent);"></i>
+                            <span style="color: var(--text-secondary);">Ski</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--bg-card); padding: 0.5rem 1.25rem; border-radius: 9999px; border: 1px solid var(--border);">
+                            <i class="fas fa-mountain" style="color: var(--accent);"></i>
+                            <span style="color: var(--text-secondary);">Escalade</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RÉSEAUX -->
+                <div style="margin-bottom: var(--space-xl);">
+                    <h2 class="cv-section-title">
+                        <i class="fas fa-share-alt"></i>
+                        Réseaux
+                    </h2>
+                    <div class="cv-social">
+                        <a href="https://github.com/MishaD06" target="_blank" class="cv-social-btn">
+                            <i class="fab fa-github"></i>
+                            GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" class="cv-social-btn">
+                            <i class="fab fa-linkedin-in"></i>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLONNE DROITE -->
+            <div>
+                
+                <div class="cv-card">
+                    <h2 class="cv-section-title">
+                        <i class="fas fa-briefcase"></i>
+                        Expérience
+                    </h2>
+                    
+                    <div class="cv-timeline-item" style="margin-bottom: 0;">
+                        <div class="cv-timeline-header">
+                            <span class="cv-timeline-title">Husse France</span>
+                            <span class="cv-timeline-date">Étés 2024-2025</span>
+                        </div>
+                        <div class="cv-timeline-sub">Vente / Conseil clientèle</div>
+                        <ul style="list-style: none; padding: 0; margin-top: var(--space-sm);">
+                            <li style="display: flex; gap: 0.75rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
+                                <i class="fas fa-circle" style="color: var(--accent); font-size: 0.4rem; margin-top: 0.6rem;"></i>
+                                <span>Préparation des commandes</span>
+                            </li>
+                            <li style="display: flex; gap: 0.75rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
+                                <i class="fas fa-circle" style="color: var(--accent); font-size: 0.4rem; margin-top: 0.6rem;"></i>
+                                <span>Livraison à domicile</span>
+                            </li>
+                            <li style="display: flex; gap: 0.75rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
+                                <i class="fas fa-circle" style="color: var(--accent); font-size: 0.4rem; margin-top: 0.6rem;"></i>
+                                <span>Conseils alimentaires pour animaux</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- COMPÉTENCES TECHNIQUES - Grille -->
+                <div style="margin-bottom: var(--space-xl);">
+                    <h2 class="cv-section-title">
+                        <i class="fas fa-microchip"></i>
+                        Compétences techniques
+                    </h2>
+                    
+                    <div class="cv-skills-grid">
+                        <div class="cv-skills-category">
+                            <h4>
+                                <i class="fas fa-code"></i>
+                                Programmation
+                            </h4>
+                            <div class="cv-skills-list">
+                                <span class="cv-skill-tag">C/C++</span>
+                                <span class="cv-skill-tag">Python</span>
+                                <span class="cv-skill-tag">HTML5</span>
+                                <span class="cv-skill-tag">CSS3</span>
+                                <span class="cv-skill-tag">JavaScript</span>
+                                <span class="cv-skill-tag">PHP</span>
+                                <span class="cv-skill-tag">MySQL</span>
+                            </div>
+                        </div>
+                        <div class="cv-skills-category">
+                            <h4>
+                                <i class="fas fa-tools"></i>
+                                Systèmes & Outils
+                            </h4>
+                            <div class="cv-skills-list">
+                                <span class="cv-skill-tag">Linux</span>
+                                <span class="cv-skill-tag">Arduino</span>
+                                <span class="cv-skill-tag">Cisco</span>
+                                <span class="cv-skill-tag">Excel</span>
+                                <span class="cv-skill-tag">Git</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div>
+                    <h2 class="cv-section-title">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        Engagement
+                    </h2>
+                    <a href="projet-citoyen.html" style="text-decoration: none; display: block;">
+                        <div class="cv-engagement">
+                            <div class="cv-engagement-icon">
+                                <i class="fas fa-droplet"></i>
+                            </div>
+                            <div class="cv-engagement-content">
+                                <h4>Projet ingénieur citoyen</h4>
+                                <p>Organisation de stands de prévention avec le Don du Sang</p>
+                                <span class="cv-engagement-link">
+                                    Voir les photos et le bilan <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md);">
+            <div style="display: flex; gap: var(--space-md);">
+                <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <div>
+                <p style="margin-bottom: 0.25rem;">Misha Dopre — misha.dopre@viacesi.fr</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">06.78.04.35.38 • Nice, France</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

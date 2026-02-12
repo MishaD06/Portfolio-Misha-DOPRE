@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misha Dopre — Étudiant ingénieur</title>
+    <meta name="description" content="Misha Dopre, étudiant à CESI Nice. Recherche stage en informatique — Avril 2026.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        
+        .engagement-card {
+            background: var(--accent-soft);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius);
+            padding: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            transition: all 0.2s var(--ease);
+            text-decoration: none;
+            color: inherit;
+            margin-top: var(--space-md);
+        }
+
+        .engagement-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(45,106,79,0.15);
+        }
+
+        .engagement-icon {
+            background: var(--accent);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .engagement-content h3 {
+            color: var(--accent);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .engagement-content p {
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .engagement-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 640px) {
+            .engagement-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">M.D.</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="cv.html">Parcours</a></li>
+                <li><a href="projets.html">Projets</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="theme-switch">
+                    <i class="fas fa-sun active"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Misha Dopre<br>Étudiant ingénieur</h1>
+                <p class="lead">CESI Nice • Cycle préparatoire • Spécialisation informatique</p>
+                <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                    <a href="cv.html" class="btn btn-primary">
+                        <i class="fas fa-arrow-right"></i> Parcours
+                    </a>
+                    <a href="projets.html" class="btn btn-outline">
+                        <i class="fas fa-code"></i> Projets
+                    </a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="https://github.com/MishaD06" target="_blank" class="btn btn-outline" style="padding: 0.6rem;" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" class="btn btn-outline" style="padding: 0.6rem;" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Infos rapides -->
+        <div style="display: flex; gap: var(--space-lg); flex-wrap: wrap; margin-bottom: var(--space-2xl);">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="background: var(--bg-card); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                    <i class="fas fa-map-pin" style="color: var(--accent);"></i>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Localisation</div>
+                    <div style="font-weight: 500; color: var(--text-primary);">Nice, France</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="background: var(--bg-card); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                    <i class="fas fa-calendar" style="color: var(--accent);"></i>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Disponible</div>
+                    <div style="font-weight: 500; color: var(--text-primary);">Stage • Avril 2026</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="background: var(--bg-card); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                    <i class="fas fa-code" style="color: var(--accent);"></i>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Stack</div>
+                    <div style="font-weight: 500; color: var(--text-primary);">C/C++ • Python • Web</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="background: var(--bg-card); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                    <i class="fas fa-car" style="color: var(--accent);"></i>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Permis</div>
+                    <div style="font-weight: 500; color: var(--text-primary);">B/A1 • Véhiculé</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- À propos -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-terminal"></i>
+                ./a-propos
+            </h2>
+            <div style="max-width: 720px;">
+                <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+                    Étudiant ingénieur en cycle préparatoire à CESI, je conçois et réalise des projets variés : applications C++ orientées objet, systèmes sur Arduino, architectures réseau Cisco, et applications web en PHP/MySQL. Je travaille actuellement sur une plateforme de stages en MVC.
+Je recherche un stage à partir d'avril 2026 – idéalement en développement logiciel, systèmes embarqués, réseaux ou développement web.
+                </p>
+                <p style="color: var(--text-muted);">
+                    Je cherche une équipe pour mon stage d'avril 2026. Développement logiciel, systèmes embarqués, réseaux, ou web.
+                </p>
+            </div>
+        </div>
+
+        <!-- Compétences clés -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-microchip"></i>
+                Compétences
+            </h2>
+            <div class="skills-list" style="margin-bottom: var(--space-md);">
+                <span class="skill-tag">C/C++</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">HTML/CSS</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">PHP</span>
+                <span class="skill-tag">MySQL</span>
+                <span class="skill-tag">Arduino</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">Cisco</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">Excel</span>
+            </div>
+        </div>
+
+        <!-- Projets récents -->
+        <div class="section">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md);">
+                <h2 class="section-title" style="margin-bottom: 0;">
+                    <i class="fas fa-rocket"></i>
+                    Projets récents
+                </h2>
+                <a href="projets.html" style="color: var(--accent); font-size: 0.95rem; font-weight: 500;">
+                    Tout voir <i class="fas fa-arrow-right" style="margin-left: 0.25rem;"></i>
+                </a>
+            </div>
+            <div class="grid-2">
+                <!-- 1. Plateforme de stages (2026 - en cours) -->
+                <div class="card">
+                    <div class="card-date" style="background: var(--accent); color: white;">EN COURS · 2026</div>
+                    <h3 class="card-title">Plateforme de gestion de stages</h3>
+                    <p class="card-subtitle">PHP/MySQL · Architecture MVC</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Authentification, gestion des offres, entreprises, candidatures. Projet de développement web.</p>
+                </div>
+                
+                <!-- 2. Portfolio (2026) -->
+                <div class="card">
+                    <div class="card-date">2026 · TERMINÉ</div>
+                    <h3 class="card-title">Portfolio — Site personnel</h3>
+                    <p class="card-subtitle">HTML/CSS/JS</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Site vitrine, thème clair/sombre, responsive. Ce site que vous visitez.</p>
+                </div>
+                
+                <!-- 3. FunkyTown (2026) -->
+                <div class="card">
+                    <div class="card-date">2026 · TERMINÉ</div>
+                    <h3 class="card-title">FunkyTown — Réseaux</h3>
+                    <p class="card-subtitle">Cisco · VLAN · IPv6</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Infrastructure réseau complète pour une ville fictive. Routage inter-VLAN, tunnel IPv6.</p>
+                </div>
+                
+                <!-- 4. Jeu de la vie (2025) -->
+                <div class="card">
+                    <div class="card-date">2025 · TERMINÉ</div>
+                    <h3 class="card-title">Jeu de la vie — Conway</h3>
+                    <p class="card-subtitle">C++ · SFML · Automate cellulaire</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Implémentation orientée objet avec interface graphique et tests unitaires.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENGAGEMENT CITOYEN -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-hand-holding-heart"></i>
+                Engagement citoyen
+            </h2>
+            <a href="projet-citoyen.html" class="engagement-card">
+                <div class="engagement-icon">
+                    <i class="fas fa-droplet"></i>
+                </div>
+                <div class="engagement-content">
+                    <h3>Projet ingénieur citoyen</h3>
+                    <p>Organisation de stands de sensibilisation au don du sang avec l'Établissement Français du Sang (EFS) sur le campus.</p>
+                    <span class="engagement-link">
+                        Voir le projet en détail <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
+        </div>
+
+        
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-xl); text-align: center; margin-top: var(--space-2xl);">
+            <h3 style="font-size: 1.5rem; margin-bottom: var(--space-sm); color: var(--text-primary);">À la recherche d'un stage</h3>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto var(--space-lg);">
+                Disponible à partir du 7 avril 2026 pour une durée de 3 à 4 mois.
+            </p>
+            <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+                <a href="cv/cv-misha-dopre.pdf" download class="btn btn-primary">
+                    <i class="fas fa-file-pdf"></i> Télécharger mon CV
+                </a>
+                <a href="contact.html" class="btn btn-outline">
+                    <i class="fas fa-paper-plane"></i> Me contacter
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md);">
+            <div style="display: flex; gap: var(--space-md);">
+                <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <div>
+                <p style="margin-bottom: 0.25rem;">Misha Dopre — misha.dopre@viacesi.fr</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">06.78.04.35.38 • Nice, France</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

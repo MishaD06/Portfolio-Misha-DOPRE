@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet citoyen — Misha Dopre</title>
+    <meta name="description" content="Projet ingénieur citoyen : stand de sensibilisation au don du sang avec l'EFS">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        
+        .project-hero {
+            background: linear-gradient(135deg, #1e3a2a, #2D6A4F);
+            color: white;
+            padding: var(--space-2xl) var(--space-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .project-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: var(--space-md);
+            color: white;
+        }
+
+        .project-hero .lead {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 720px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: var(--space-xl) 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-soft);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: var(--space-xl);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -2rem;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg-primary);
+            box-shadow: 0 0 0 2px var(--accent-soft);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+
+        .photo-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(45,106,79,0.15);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            padding: var(--space-md);
+        }
+
+        .photo-caption h4 {
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .photo-caption p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        
+        .skills-section {
+            margin: var(--space-2xl) 0;
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: var(--space-md);
+        }
+
+        .skill-tag-citoyen {
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid var(--accent);
+        }
+
+        /* Bannière EFS */
+        .efs-banner {
+            background: #e11d48;
+            color: white;
+            padding: var(--space-lg);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin: var(--space-2xl) 0;
+        }
+
+        .efs-banner a {
+            background: white;
+            color: #e11d48;
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .efs-banner a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(225,29,72,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .project-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .efs-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">M.D.</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="cv.html">Parcours</a></li>
+                <li><a href="projets.html">Projets</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="theme-switch">
+                    <i class="fas fa-sun active"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <div class="project-hero">
+            <div style="max-width: 800px;">
+                <div style="display: inline-block; background: rgba(255,255,255,0.2); padding: 0.25rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; margin-bottom: var(--space-md); font-family: var(--font-mono);">
+                    PROJET INGÉNIEUR CITOYEN · 2025-2026
+                </div>
+                <h1>Don du sang &<br>sensibilisation</h1>
+                <p class="lead">Organisation de stands de collecte et de prévention avec l'Établissement Français du Sang (EFS) sur le Campus Sud des Métiers.</p>
+                <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-lg); flex-wrap: wrap;">
+                    <a href="https://dondesang.efs.sante.fr" target="_blank" class="btn" style="background: white; color: var(--accent);">
+                        <i class="fas fa-external-link-alt"></i> dondesang.efs.sante.fr
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contexte & équipe -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); margin-bottom: var(--space-2xl);">
+            <div>
+                <h2 class="cv-section-title" style="border-bottom-color: var(--accent);">
+                    <i class="fas fa-bullseye"></i>
+                    Contexte
+                </h2>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: var(--space-md);">
+                    Dans le cadre de ma formation d'ingénieur au CESI, j'ai choisi de m'investir dans un projet à impact humain direct : <strong>sensibiliser les étudiants au don du sang</strong> et faciliter leur engagement auprès de l'EFS.
+                </p>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-md);">
+                    Beaucoup de jeunes connaissent le don du sang, mais peu savent à quoi il sert concrètement et encore moins comment devenir donneur. Notre objectif était de lever les freins (peur, méconnaissance, indifférence) et de rendre cette démarche accessible et décomplexée.
+                </p>
+                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-md); margin-top: var(--space-md);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: var(--space-sm);">
+                        <i class="fas fa-users" style="color: var(--accent);"></i>
+                        <span style="font-weight: 600;">Équipe projet</span>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-circle" style="color: var(--accent); font-size: 0.5rem;"></i> Misha DOPRE</span>
+                        <span style="display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-circle" style="color: var(--accent); font-size: 0.5rem;"></i> Lohan DALLE-CAZAUX</span>
+                        <span style="display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-circle" style="color: var(--accent); font-size: 0.5rem;"></i> Tarek BOUGHZALA</span>
+                        <span style="display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-circle" style="color: var(--accent); font-size: 0.5rem;"></i> Julian COTTALORDA</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: var(--space-sm); margin-bottom: 0;">
+                        <i class="fas fa-handshake"></i> Partenaire : EFS — Endrea KTORZA-BUGGIANI
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-lg);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: var(--space-sm);">
+                        <i class="fas fa-flag" style="color: var(--accent);"></i>
+                        <span style="font-weight: 600; color: var(--text-primary);">Objectifs</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--text-secondary);">
+                            <i class="fas fa-check-circle" style="color: var(--accent);"></i>
+                            <span>Informer sur l'importance du don</span>
+                        </li>
+                        <li style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--text-secondary);">
+                            <i class="fas fa-check-circle" style="color: var(--accent);"></i>
+                            <span>Faciliter l'engagement des étudiants</span>
+                        </li>
+                        <li style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--text-secondary);">
+                            <i class="fas fa-check-circle" style="color: var(--accent);"></i>
+                            <span>Créer un format ludique et accessible</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+        <h2 class="cv-section-title" style="border-bottom-color: var(--accent);">
+            <i class="fas fa-timeline"></i>
+            Déroulement du projet
+        </h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Septembre - Octobre 2025</div>
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Recherche & contact</h3>
+                <p style="color: var(--text-secondary);">Prise de contact avec l'EFS, définition des objectifs et planification de la collecte. Choix d'un format ludique pour capter l'attention.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">11 décembre 2025</div>
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">1ʳᵉ collecte & stand de sensibilisation</h3>
+                <p style="color: var(--text-secondary);">Stand tenu de 8h30 à 13h — d'abord à l'entrée du campus, puis dans le hall de CESI. Jeu de lancer de cerceaux avec questions sur les statistiques du don du sang. Distribution de goodies.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">16 janvier 2026</div>
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Stand de sensibilisation don de plasma</h3>
+                <p style="color: var(--text-secondary);">Nouvelle action ciblée sur le don de plasma. Explication du processus et prise de rendez-vous via QR code.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">11 mars 2026</div>
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Nouvelle collecte</h3>
+                <p style="color: var(--text-secondary);">Collecte de sang mobile sur le Campus Sud des Métier (communication en amont).</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Février - Mars 2026</div>
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Prolongements</h3>
+                <p style="color: var(--text-secondary);">Projet de navette dédiée CESI vers la Maison du Don pour les étudiants n'ayant pas pu participer aux collectes sur site.</p>
+            </div>
+        </div>
+
+        <!-- GALERIE PHOTOS -->
+        <h2 class="cv-section-title" style="border-bottom-color: var(--accent);">
+            <i class="fas fa-camera"></i>
+            Les événements en images
+        </h2>
+        <div class="photo-gallery">
+            
+            <div class="photo-item">
+                <img src="images/projet-citoyen/stand-entree.jpg" alt="Stand à l'entrée du campus - Équipe projet" class="photo-img">
+                <div class="photo-caption">
+                    <h4>Stand à l'entrée du campus</h4>
+                    <p>8h30 - 11h</p>
+                </div>
+            </div>
+            
+            
+            <div class="photo-item">
+                <img src="images/projet-citoyen/logo-efs.jpg" alt="Logo Établissement Français du Sang" class="photo-img">
+                <div class="photo-caption">
+                    <h4>Établissement Français du Sang</h4>
+                    <p>Notre partenaire sur le projet · 1 don = 3 vies sauvées</p>
+                </div>
+            </div>
+            
+            
+            <div class="photo-item">
+                <img src="images/projet-citoyen/insta-prelevement.jpg" alt="Publication Instagram - Prélèvement de sang" class="photo-img">
+                <div class="photo-caption">
+                    <h4>Communication avec l'aide du @bdecesinice</h4>
+                    <p>Publication Instagram pour sensibiliser au don du sang</p>
+                </div>
+            </div>
+            
+            
+            <div class="photo-item">
+                <img src="images/projet-citoyen/affiche-motos.jpg" alt="Affiche collecte devant l'entrée avec motos" class="photo-img">
+                <div class="photo-caption">
+                    <h4>Affichages</h4>
+                    <p>Affiche dans la rue indiquant l'emplacement de la collecte</p>
+                </div>
+            </div>
+            
+            
+            <div class="photo-item">
+                <img src="images/projet-citoyen/insta-collecte.jpg" alt="Affiche Instagram collecte de sang" class="photo-img">
+                <div class="photo-caption">
+                    <h4>Collecte EFS · 11 décembre 2025</h4>
+                    <p>12h-17h · Campus Sud des Métiers · Hall principal RDC</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="efs-banner">
+            <div>
+                <div style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.25rem;">ÉTABLISSEMENT FRANÇAIS DU SANG</div>
+                <div style="opacity: 0.9;">Du donneur aux patients · 1 don = 3 vies sauvées</div>
+            </div>
+            <a href="https://dondesang.efs.sante.fr" target="_blank">
+                <i class="fas fa-calendar-check"></i> Prendre rendez-vous
+            </a>
+        </div>
+
+        
+        <div class="skills-section">
+            <h2 class="cv-section-title" style="border-bottom-color: var(--accent);">
+                <i class="fas fa-user-graduate"></i>
+                Compétences développées
+            </h2>
+            
+            <div class="skills-tags">
+                <span class="skill-tag-citoyen">Travail en équipe</span>
+                <span class="skill-tag-citoyen">Gestion de projet</span>
+                <span class="skill-tag-citoyen">Communication</span>
+                <span class="skill-tag-citoyen">Relation partenaire</span>
+                <span class="skill-tag-citoyen">Organisation événementielle</span>
+            </div>
+        </div>
+
+        
+        <div style="text-align: center; margin-top: var(--space-2xl);">
+            <a href="cv.html" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-arrow-left"></i>
+                Retour au parcours
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md);">
+            <div style="display: flex; gap: var(--space-md);">
+                <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem;">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <div>
+                <p style="margin-bottom: 0.25rem;">Misha Dopre — misha.dopre@viacesi.fr</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">06.78.04.35.38 • Nice, France</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

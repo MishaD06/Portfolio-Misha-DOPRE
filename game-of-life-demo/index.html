@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de la vie · Démo JS</title>
+    
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== STYLE SPÉCIFIQUE ===== */
+        body {
+            padding: 0;
+            background: var(--bg-primary);
+        }
+
+        .demo-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        /* Canvas */
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        canvas {
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: #000;
+            cursor: pointer;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1/1;
+            max-width: 600px;
+            transition: border-color 0.2s var(--ease);
+        }
+
+        canvas:hover {
+            border-color: var(--accent);
+        }
+
+        /* Panneaux */
+        .control-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .control-section {
+            margin-bottom: var(--space-lg);
+        }
+
+        .control-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .control-title i {
+            color: var(--accent);
+        }
+
+        /* Outils */
+        .tool-grid {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s var(--ease);
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .tool-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .tool-btn.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        /* Curseur vitesse */
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .speed-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+            min-width: 100px;
+        }
+
+        input[type=range] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid var(--bg-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            background: var(--accent-light);
+        }
+
+        /* Statistiques */
+        .stats-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--space-md) var(--space-lg);
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-top: var(--space-lg);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .stat-item i {
+            color: var(--accent);
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Bouton retour */
+        .back-link {
+            display: flex;
+            justify-content: center;
+            margin-top: var(--space-xl);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s var(--ease);
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .demo-wrapper {
+                padding: var(--space-lg) var(--space-md);
+            }
+            .stats-card {
+                flex-direction: column;
+                gap: var(--space-sm);
+                align-items: center;
+            }
+            .speed-control {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-wrapper">
+        <!-- Titre -->
+        <h1 style="font-size: 2rem; margin-bottom: var(--space-xl); display: flex; align-items: center; gap: var(--space-sm);">
+            <i class="fas fa-gamepad" style="color: var(--accent);"></i>
+            Démo en JS du Jeu de la vie · Conway
+        </h1>
+
+        <!-- Canvas -->
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="600" height="600"></canvas>
+        </div>
+
+        <!-- Panneau de contrôle -->
+        <div class="control-panel">
+            
+            <div class="control-section">
+                <div class="control-title">
+                    <i class="fas fa-play-circle"></i>
+                    LANCER
+                </div>
+                <div class="button-group" style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                    <button id="startBtn" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Lancer
+                    </button>
+                    <button id="stepBtn" class="btn btn-outline">
+                        <i class="fas fa-forward-step"></i> +1 Étape
+                    </button>
+                    <button id="randomBtn" class="btn btn-outline">
+                        <i class="fas fa-random"></i> Aléatoire
+                    </button>
+                    <button id="clearBtn" class="btn btn-outline">
+                        <i class="fas fa-trash"></i> Tout effacer
+                    </button>
+                </div>
+            </div>
+
+            <!-- VITESSE -->
+            <div class="control-section">
+                <div class="control-title">
+                    <i class="fas fa-tachometer-alt"></i>
+                    VITESSE
+                </div>
+                <div class="speed-control">
+                    <span class="speed-label">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="speedValue">100</span> ms
+                    </span>
+                    <input type="range" id="speedSlider" min="10" max="500" value="100" step="10">
+                </div>
+            </div>
+
+            <!-- OUTILS DE DESSIN -->
+            <div class="control-section">
+                <div class="control-title">
+                    <i class="fas fa-pencil-alt"></i>
+                    OUTILS DE DESSIN
+                </div>
+                <div class="tool-grid">
+                    <button id="toolAlive" class="tool-btn active">
+                        <i class="fas fa-circle"></i> Vivant
+                    </button>
+                    <button id="toolWall" class="tool-btn">
+                        <i class="fas fa-square"></i> Mur
+                    </button>
+                    <button id="toolEraser" class="tool-btn">
+                        <i class="fas fa-eraser"></i> Gomme
+                    </button>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">
+                    <i class="fas fa-mouse-pointer"></i> Cliquez ou glissez sur la grille pour dessiner.
+                </p>
+            </div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="stats-card">
+            <div class="stat-item">
+                <i class="fas fa-rotate"></i>
+                Génération: <span id="generationCount" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-heart"></i>
+                Vivants: <span id="aliveCount" class="stat-value">5</span>
+            </div>
+        </div>
+
+        
+        <div class="back-link">
+            <a href="../projets.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Retour aux projets
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // sync thème site
+        (function() {
+            // Récupérer le thème
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        // config
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        const GRID_SIZE = 50;
+        const CELL_SIZE = canvas.width / GRID_SIZE;
+        const ALIVE_COLOR = '#2D6A4F';
+        const WALL_COLOR = '#4a4a4a';
+        const DEAD_COLOR = '#000000';
+        
+        let grid = [];
+        let running = false;
+        let intervalId = null;
+        let generation = 0;
+        let currentTool = 'alive';
+
+        // initialisation
+        function initGrid(empty = false) {
+            grid = [];
+            for (let i = 0; i < GRID_SIZE; i++) {
+                grid[i] = [];
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    grid[i][j] = { alive: false, wall: false };
+                }
+            }
+            if (!empty) setGliderPattern();
+        }
+
+        function setGliderPattern() {
+            initGrid(true);
+            const startX = 5, startY = 5;
+            grid[startY][startX + 1].alive = true;
+            grid[startY + 1][startX + 2].alive = true;
+            grid[startY + 2][startX].alive = true;
+            grid[startY + 2][startX + 1].alive = true;
+            grid[startY + 2][startX + 2].alive = true;
+        }
+
+        function randomGrid() {
+            initGrid(true);
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    grid[i][j].alive = Math.random() < 0.2;
+                }
+            }
+        }
+
+        // moteur
+        function countAliveNeighbors(x, y) {
+            let count = 0;
+            for (let dx = -1; dx <= 1; dx++) {
+                for (let dy = -1; dy <= 1; dy++) {
+                    if (dx === 0 && dy === 0) continue;
+                    const nx = (x + dx + GRID_SIZE) % GRID_SIZE;
+                    const ny = (y + dy + GRID_SIZE) % GRID_SIZE;
+                    if (grid[nx][ny].alive && !grid[nx][ny].wall) count++;
+                }
+            }
+            return count;
+        }
+
+        function updateGrid() {
+            const newGrid = JSON.parse(JSON.stringify(grid));
+            
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    if (grid[i][j].wall) continue;
+                    
+                    const neighbors = countAliveNeighbors(i, j);
+                    const isAlive = grid[i][j].alive;
+                    
+                    if (isAlive) {
+                        newGrid[i][j].alive = neighbors === 2 || neighbors === 3;
+                    } else {
+                        newGrid[i][j].alive = neighbors === 3;
+                    }
+                }
+            }
+            
+            grid = newGrid;
+            generation++;
+        }
+
+        function countAlive() {
+            let count = 0;
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    if (grid[i][j].alive) count++;
+                }
+            }
+            return count;
+        }
+
+        // dessin
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    if (grid[i][j].wall) {
+                        ctx.fillStyle = WALL_COLOR;
+                    } else {
+                        ctx.fillStyle = grid[i][j].alive ? ALIVE_COLOR : DEAD_COLOR;
+                    }
+                    
+                    ctx.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                    
+                    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    ctx.strokeStyle = isDark ? '#2a2a2a' : '#e4e4e7';
+                    ctx.strokeRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                }
+            }
+            
+            document.getElementById('generationCount').textContent = generation;
+            document.getElementById('aliveCount').textContent = countAlive();
+        }
+
+        // interactions
+        let isDrawing = false;
+
+        function drawCell(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            const canvasX = (e.clientX - rect.left) * scaleX;
+            const canvasY = (e.clientY - rect.top) * scaleY;
+            
+            const x = Math.floor(canvasY / CELL_SIZE);
+            const y = Math.floor(canvasX / CELL_SIZE);
+            
+            if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+                switch(currentTool) {
+                    case 'alive':
+                        grid[x][y].alive = true;
+                        grid[x][y].wall = false;
+                        break;
+                    case 'wall':
+                        grid[x][y].wall = true;
+                        grid[x][y].alive = false;
+                        break;
+                    case 'eraser':
+                        grid[x][y].alive = false;
+                        grid[x][y].wall = false;
+                        break;
+                }
+                drawGrid();
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            drawCell(e);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDrawing) drawCell(e);
+        });
+
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseleave', () => isDrawing = false);
+
+        // boutons
+        document.getElementById('startBtn').addEventListener('click', function() {
+            if (running) {
+                clearInterval(intervalId);
+                this.innerHTML = '<i class="fas fa-play"></i> Lancer';
+                running = false;
+            } else {
+                const speed = parseInt(document.getElementById('speedSlider').value);
+                intervalId = setInterval(() => {
+                    updateGrid();
+                    drawGrid();
+                }, speed);
+                this.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                running = true;
+            }
+        });
+
+        document.getElementById('stepBtn').addEventListener('click', function() {
+            if (!running) {
+                updateGrid();
+                drawGrid();
+            }
+        });
+
+        document.getElementById('randomBtn').addEventListener('click', function() {
+            if (running) {
+                clearInterval(intervalId);
+                document.getElementById('startBtn').innerHTML = '<i class="fas fa-play"></i> Lancer';
+                running = false;
+            }
+            generation = 0;
+            randomGrid();
+            drawGrid();
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            if (running) {
+                clearInterval(intervalId);
+                document.getElementById('startBtn').innerHTML = '<i class="fas fa-play"></i> Lancer';
+                running = false;
+            }
+            generation = 0;
+            initGrid(true);
+            drawGrid();
+        });
+
+        // Outils
+        document.getElementById('toolAlive').addEventListener('click', function() {
+            currentTool = 'alive';
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+        });
+
+        document.getElementById('toolWall').addEventListener('click', function() {
+            currentTool = 'wall';
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+        });
+
+        document.getElementById('toolEraser').addEventListener('click', function() {
+            currentTool = 'eraser';
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+        });
+
+        // Vitesse
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+
+        speedSlider.addEventListener('input', function() {
+            speedValue.textContent = this.value;
+            if (running) {
+                clearInterval(intervalId);
+                intervalId = setInterval(() => {
+                    updateGrid();
+                    drawGrid();
+                }, this.value);
+            }
+        });
+
+        // init
+        initGrid();
+        drawGrid();
+    </script>
+</body>
+</html>

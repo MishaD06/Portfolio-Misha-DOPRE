@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets — Misha Dopre</title>
+    <meta name="description" content="Projets académiques et personnels de Misha Dopre, étudiant à CESI Nice">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--space-xl);
+            transition: all 0.2s var(--ease);
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 20px rgba(45,106,79,0.08);
+        }
+
+        [data-theme="dark"] .project-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: var(--space-sm);
+        }
+
+        .project-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .project-date {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            background: var(--accent-soft);
+            padding: 0.25rem 0.85rem;
+            border-radius: 9999px;
+            border: none;
+        }
+
+        .project-date-en-cours {
+            background: var(--accent);
+            color: white;
+        }
+
+        .project-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: var(--space-md);
+            font-weight: 500;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: var(--space-lg);
+        }
+
+        .project-description p {
+            margin-bottom: var(--space-sm);
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .btn-project {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s var(--ease);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .btn-project:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateY(-2px);
+        }
+
+        .btn-github {
+            background: #24292e;
+            color: white;
+            border: none;
+        }
+
+        .btn-github:hover {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .btn-js {
+            background: #f7df1e;
+            color: #000;
+            border: none;
+        }
+
+        .btn-js:hover {
+            background: #f5d742;
+            color: #000;
+        }
+
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-disabled:hover {
+            transform: none;
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: var(--bg-card);
+        }
+
+        
+        .consigne-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+        }
+
+        .consigne-content {
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            padding: var(--space-xl);
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .consigne-close {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+        }
+
+        .consigne-close:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .consigne-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .consigne-text h3 {
+            color: var(--accent);
+            margin-bottom: var(--space-md);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .consigne-text h4 {
+            color: var(--text-primary);
+            margin: var(--space-lg) 0 var(--space-sm);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .consigne-text ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: var(--space-md);
+        }
+
+        .consigne-text li {
+            margin-bottom: 0.6rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .consigne-text li i {
+            color: var(--accent);
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-xs);
+            }
+            
+            .project-title {
+                font-size: 1.35rem;
+            }
+            
+            .consigne-content {
+                padding: var(--space-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">M.D.</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="cv.html">Parcours</a></li>
+                <li><a href="projets.html" class="active">Projets</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="theme-switch">
+                    <i class="fas fa-sun active"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- En-tête -->
+        <div style="margin-bottom: var(--space-2xl);">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Projets</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">Développement · Systèmes embarqués · Réseaux · Modélisation</p>
+        </div>
+
+        <!-- GRILLE PROJETS -->
+        <div class="projects-grid">
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Plateforme de gestion de stages</h2>
+                    <span class="project-date project-date-en-cours">EN COURS · 2026</span>
+                </div>
+                <div class="project-subtitle">Architecture MVC · PHP/MySQL · Projet de développement web</div>
+                <div class="project-description">
+                    <p>Développement d'une plateforme complète de gestion des stages pour les étudiants. Authentification et gestion des rôles (admin, pilote, étudiant), gestion des offres, entreprises et candidatures.</p>
+                    <p style="color: var(--text-muted);">Stack : PHP POO, MySQL, HTML5/CSS3, JavaScript. Architecture MVC, responsive design, SEO, sécurité.</p>
+                </div>
+                <div class="project-buttons">
+                    <span class="btn-project btn-disabled" style="background: var(--bg-card);">
+                        <i class="fab fa-github"></i> GitHub (projet encore en cours)
+                    </span>
+                    <button onclick="showConsigne('web')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Portfolio — Site personnel</h2>
+                    <span class="project-date">2026 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">Site vitrine · HTML/CSS/JS</div>
+                <div class="project-description">
+                    <p>Conception et réalisation d'un site vitrine pour présenter mon parcours, mes projets et mes compétences. Thème clair/sombre et responsive.</p>
+                    <p style="color: var(--text-muted);">Ce site que vous visitez actuellement. Développement en autonomie.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Portfolio-Misha-DOPRE" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">FunkyTown – Infrastructure réseau</h2>
+                    <span class="project-date">2026 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">Cisco Packet Tracer · VLAN · VTP · Routage inter-VLAN · IPv6</div>
+                <div class="project-description">
+                    <p>Projet de conception et configuration d'une infrastructure réseau complète pour une ville fictive. Mise en place de VLANs, routage inter-VLAN, VTP, DHCP, sécurisation des accès, et tunnel IPv6 vers le cloud.</p>
+                    <p style="color: var(--text-muted);">Clients : eXia, Bibliothèque municipale, Engie, Digiplex, Datacenter.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Projet-r-seaux" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <button onclick="showConsigne('reseau')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Jeu de la vie – Conway</h2>
+                    <span class="project-date">2025 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">C++ · POO · SFML · Automate cellulaire</div>
+                <div class="project-description">
+                    <p>Implémentation orientée objet du jeu de la vie de John Conway. Application console et interface graphique SFML. Gestion de la grille, règles d'évolution, tests unitaires et extensions.</p>
+                    <p style="color: var(--text-muted);">Projet en binôme. Respect des principes SOLID et polymorphisme.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Game-Of-Life" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="game-of-life-demo/index.html" class="btn-project btn-js">
+    <i class="fab fa-js"></i> Démo JS
+</a>
+                    <button onclick="showConsigne('poo-life')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Calculatrice parenthésée</h2>
+                    <span class="project-date">2025 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">C++ · STL · Pile · Map</div>
+                <div class="project-description">
+                    <p>Développement d'une calculatrice capable d'interpréter des expressions arithmétiques pleinement parenthésées. Utilisation de la STL (stack, vector, map) et implémentation d'un analyseur syntaxique.</p>
+                    <p style="color: var(--text-muted);">Projet inspiré des techniques de compilation et d'évaluation d'expressions.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Prosit-6-POO-Une-vraie-calculatrice" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <button onclick="showConsigne('poo-calc')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Station météo embarquée</h2>
+                    <span class="project-date">2025 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">Arduino · ATmega328 · Capteurs I2C/SPI/UART</div>
+                <div class="project-description">
+                    <p>Prototype de station météo pour navires. Mesure de pression, température, hygrométrie, luminosité, GPS. Sauvegarde sur carte SD, horodatage RTC, communication d'état par LED RGB.</p>
+                    <p style="color: var(--text-muted);">Projet "Worldwide Weather Watcher" pour l'AIVM.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Projet-Syst-mes-embarqu-s" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <button onclick="showConsigne('embarque')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Qualité de l'air</h2>
+                    <span class="project-date">2025 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">MySQL · MCD/MLD · Requêtes complexes</div>
+                <div class="project-description">
+                    <p>Conception et réalisation d'une base de données pour le ministère de la Transition Écologique. Gestion des agences, capteurs, mesures et rapports sur la qualité de l'air. Modélisation, peuplement et requêtes SQL avancées.</p>
+                    <p style="color: var(--text-muted);">Projet académique ClearData.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Projet-bases-de-donn-es" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <button onclick="showConsigne('bd')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Escape No Game</h2>
+                    <span class="project-date">2025 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">Traitement du signal · Filtrage · Modulation · Jupyter</div>
+                <div class="project-description">
+                    <p>Projet de R&D pour l'agence AIL3C : solution de communication cachée par ondes sonores non audibles. Étude fréquentielle, filtrage analogique et numérique, chaîne de transmission complète, POC en Python sous Jupyter.</p>
+                    <p style="color: var(--text-muted);">Modulation, échantillonnage, codage, détection d'erreurs.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Projet-traitement-du-signal" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <button onclick="showConsigne('signal')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Fast & Furious</h2>
+                    <span class="project-date">2024 · TERMINÉ</span>
+                </div>
+                <div class="project-subtitle">Mécanique newtonienne · Simulation Python</div>
+                <div class="project-description">
+                    <p>Étude théorique et simulation numérique d'un circuit de course comportant une piste d'élan, un looping et un saut de ravin. Modélisation des forces, équations du mouvement, calcul des vitesses minimales, temps de parcours.</p>
+                    <p style="color: var(--text-muted);">Projet en équipe pour sélectionner la voiture optimale.</p>
+                </div>
+                <div class="project-buttons">
+                    <a href="https://github.com/MishaD06/Projet-m-canique" target="_blank" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <button onclick="showConsigne('meca')" class="btn-project">
+                        <i class="fas fa-file-alt"></i> Consigne
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        
+        <div id="consigneModal" class="consigne-modal" onclick="if(event.target===this) hideConsigne()">
+            <div class="consigne-content">
+                <div class="consigne-close" onclick="hideConsigne()">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div id="consigneText" class="consigne-text">
+                    <!-- Contenu injecté par JavaScript -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md);">
+            <div style="display: flex; gap: var(--space-md);">
+                <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <div>
+                <p style="margin-bottom: 0.25rem;">Misha Dopre — misha.dopre@viacesi.fr</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">06.78.04.35.38 • Nice, France</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        const themeSwitch = document.querySelector('.theme-switch');
+        const htmlElement = document.documentElement;
+        const lightIcon = document.querySelector('.fa-sun');
+        const darkIcon = document.querySelector('.fa-moon');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                lightIcon?.classList.remove('active');
+                darkIcon?.classList.add('active');
+            } else {
+                htmlElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                darkIcon?.classList.remove('active');
+                lightIcon?.classList.add('active');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        if (themeSwitch) {
+            themeSwitch.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                setTheme(currentTheme === 'light' ? 'dark' : 'light');
+            });
+        }
+
+        
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        
+        function showConsigne(projet) {
+            const modal = document.getElementById('consigneModal');
+            const consigneDiv = document.getElementById('consigneText');
+            
+            let content = '';
+            
+            switch(projet) {
+                case 'web':
+                    content = `
+                        <h3>📋 Plateforme de gestion de stages</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Développement web · 2026 (en cours)</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Réalisation d'un site web pour regrouper les offres de stage et faciliter la mise en relation entre étudiants, entreprises et pilotes de promotion.</p>
+                        
+                        <h4>Spécifications fonctionnelles</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Authentification et gestion des rôles (admin, pilote, étudiant)</li>
+                            <li><i class="fas fa-check-circle"></i> Gestion des entreprises (CRUD + évaluation)</li>
+                            <li><i class="fas fa-check-circle"></i> Gestion des offres de stage (CRUD, recherche, statistiques)</li>
+                            <li><i class="fas fa-check-circle"></i> Gestion des candidatures et wish-list</li>
+                            <li><i class="fas fa-check-circle"></i> Pagination, mentions légales, responsive</li>
+                        </ul>
+                        
+                        <h4>Spécifications techniques</h4>
+                        <ul>
+                            <li><i class="fas fa-code"></i> Architecture MVC obligatoire</li>
+                            <li><i class="fas fa-code"></i> PHP POO, MySQL, HTML5/CSS3, JavaScript</li>
+                            <li><i class="fas fa-code"></i> Moteur de template, routage d'URL</li>
+                            <li><i class="fas fa-code"></i> Sécurité : injections SQL, XSS, CSRF, HTTPS</li>
+                            <li><i class="fas fa-code"></i> SEO : balises meta, sitemap, URLs propres</li>
+                            <li><i class="fas fa-code"></i> Tests unitaires (PHPUnit)</li>
+                        </ul>
+                        
+                        <h4>Méthodologie</h4>
+                        <p>Gestion de projet en méthode Scrum (sprints, daily, backlog). Maquettage mobile-first, développement itératif.</p>
+                    `;
+                    break;
+                    
+                case 'reseau':
+                    content = `
+                        <h3>🌐 FunkyTown – Infrastructure réseau</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Réseaux & Systèmes · 2026</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Le maire de FunkyTown souhaite soutenir une politique numérique auprès des entreprises de la ville. L'ESN eXia, la bibliothèque municipale, Engie et Digiplex font appel à vos services.</p>
+                        
+                        <h4>Cahier des charges</h4>
+                        <ul>
+                            <li><i class="fas fa-network-wired"></i> <strong>eXia</strong> : réseau d'entreprise (192.168.1.0/24), serveur DNS/FTP, WiFi sécurisé</li>
+                            <li><i class="fas fa-network-wired"></i> <strong>Bibliothèque</strong> : DHCP, WiFi public, accès distant SSH</li>
+                            <li><i class="fas fa-network-wired"></i> <strong>Engie</strong> : 3 VLANs (VTP), VLSM, routage inter-VLAN</li>
+                            <li><i class="fas fa-network-wired"></i> <strong>Digiplex</strong> : 8 VLANs, Etherchannel, contrôleur WiFi, management</li>
+                            <li><i class="fas fa-network-wired"></i> <strong>Datacenter</strong> : tunnel IPv6 vers le cloud Meraki</li>
+                        </ul>
+                        
+                        <h4>Livrables</h4>
+                        <ul>
+                            <li><i class="fas fa-file"></i> Cartographie Visio (logique/physique)</li>
+                            <li><i class="fas fa-file"></i> Plan d'adressage VLSM</li>
+                            <li><i class="fas fa-file"></i> Maquette Packet Tracer fonctionnelle</li>
+                            <li><i class="fas fa-file"></i> Gestion de projet (GANTT, PERT, plan de déploiement)</li>
+                            <li><i class="fas fa-file"></i> Soutenance technique</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'poo-life':
+                    content = `
+                        <h3>🦠 Jeu de la vie – Conway</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">POO · C++ · 2025</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Implémentation orientée objet de l'automate cellulaire proposé par le mathématicien John Conway.</p>
+                        
+                        <h4>Spécifications</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Lecture d'un fichier décrivant l'état initial</li>
+                            <li><i class="fas fa-check-circle"></i> Application des règles d'évolution</li>
+                            <li><i class="fas fa-check-circle"></i> Mode console (export des itérations)</li>
+                            <li><i class="fas fa-check-circle"></i> Mode graphique (SFML) avec contrôle de la vitesse</li>
+                            <li><i class="fas fa-check-circle"></i> Tests unitaires</li>
+                        </ul>
+                        
+                        <h4>Concepts OO exigés</h4>
+                        <ul>
+                            <li><i class="fas fa-cube"></i> Classes Jeu, Grille, Cellule</li>
+                            <li><i class="fas fa-cube"></i> Hiérarchie de classes pour l'état des cellules (polymorphisme)</li>
+                            <li><i class="fas fa-cube"></i> Hiérarchie pour les règles d'évolution</li>
+                            <li><i class="fas fa-cube"></i> Découplage métier/affichage</li>
+                            <li><i class="fas fa-cube"></i> Principes SOLID</li>
+                        </ul>
+                        
+                        <h4>Extensions (bonus)</h4>
+                        <ul>
+                            <li><i class="fas fa-star"></i> Grille torique</li>
+                            <li><i class="fas fa-star"></i> Cellules obstacles</li>
+                            <li><i class="fas fa-star"></i> Placement de motifs pré-programmés</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'poo-calc':
+                    content = `
+                        <h3>🧮 Calculatrice parenthésée</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">POO · STL · 2025</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Développement d'une calculatrice en C++ pour interpréter des expressions arithmétiques pleinement parenthésées.</p>
+                        
+                        <h4>Objectifs pédagogiques</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Maîtrise de la bibliothèque STL</li>
+                            <li><i class="fas fa-check-circle"></i> Utilisation des conteneurs (vector, stack, map)</li>
+                            <li><i class="fas fa-check-circle"></i> Algorithmes sur les piles</li>
+                            <li><i class="fas fa-check-circle"></i> Différenciation opérateurs unaires/binaires</li>
+                        </ul>
+                        
+                        <h4>Fonctionnalités</h4>
+                        <ul>
+                            <li><i class="fas fa-calculator"></i> Lecture caractère par caractère</li>
+                            <li><i class="fas fa-calculator"></i> Pile d'opérandes et pile d'opérateurs</li>
+                            <li><i class="fas fa-calculator"></i> Évaluation d'expressions complexes</li>
+                            <li><i class="fas fa-calculator"></i> Gestion des entiers et opérations de base</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'embarque':
+                    content = `
+                        <h3>⛵ Station météo embarquée</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Systèmes embarqués · Arduino · 2025</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Projet "Worldwide Weather Watcher" pour l'Agence Internationale pour la Vigilance Météorologique (AIVM).</p>
+                        
+                        <h4>Matériel</h4>
+                        <ul>
+                            <li><i class="fas fa-microchip"></i> Microcontrôleur : AVR ATmega328 (Arduino)</li>
+                            <li><i class="fas fa-microchip"></i> Capteurs : pression, température, hygrométrie, GPS, luminosité</li>
+                            <li><i class="fas fa-microchip"></i> Modules : lecteur carte SD (SPI), horloge RTC (I2C), LED RGB, boutons</li>
+                        </ul>
+                        
+                        <h4>Fonctionnalités</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Acquisition des données capteurs</li>
+                            <li><i class="fas fa-check-circle"></i> Horodatage RTC</li>
+                            <li><i class="fas fa-check-circle"></i> Sauvegarde sur carte SD</li>
+                            <li><i class="fas fa-check-circle"></i> Affichage d'état par LED RGB</li>
+                            <li><i class="fas fa-check-circle"></i> Interaction utilisateur (boutons)</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'bd':
+                    content = `
+                        <h3>🌿 Qualité de l'air – Ministère</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Bases de données · MySQL · 2025</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Projet ClearData pour le ministère de la Transition Écologique. Création d'une base de données pour stocker et interroger des données sur la qualité de l'air.</p>
+                        
+                        <h4>Structure</h4>
+                        <ul>
+                            <li><i class="fas fa-database"></i> Agences régionales et personnel</li>
+                            <li><i class="fas fa-database"></i> Capteurs et mesures (concentration en ppm)</li>
+                            <li><i class="fas fa-database"></i> Rapports d'analyse</li>
+                            <li><i class="fas fa-database"></i> Gaz (GES, GESI)</li>
+                        </ul>
+                        
+                        <h4>Requêtes attendues</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> 12 requêtes complexes (jointures, agrégation, sous-requêtes)</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'signal':
+                    content = `
+                        <h3>🔊 Escape No Game</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Traitement du signal · 2025</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Projet R&D pour l'agence AIL3C : communication cachée par ondes sonores non audibles via un microphone.</p>
+                        
+                        <h4>Livrables</h4>
+                        <ul>
+                            <li><i class="fas fa-file"></i> Livrable 1 : Proposition de solution (caractéristiques des ondes)</li>
+                            <li><i class="fas fa-file"></i> Livrable 2 : Filtrage analogique (fonction de transfert, Bode, simulation)</li>
+                            <li><i class="fas fa-file"></i> Livrable 3 : Chaîne de transmission complète</li>
+                            <li><i class="fas fa-file"></i> Livrable 4 : POC Python sous Jupyter (modulation, codage, FEC)</li>
+                            <li><i class="fas fa-file"></i> Soutenance avec démonstration</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'meca':
+                    content = `
+                        <h3>🏎️ Fast & Furious – Double Loop Dare</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Mécanique · 2024</p>
+                        
+                        <h4>Contexte</h4>
+                        <p>Étude théorique pour sélectionner la voiture optimale sur un circuit composé d'une piste d'élan (2m haut, 31m long), d'un looping (R=6m) et d'un saut de ravin (9m large, -1m dénivelé).</p>
+                        
+                        <h4>Livrables</h4>
+                        <ul>
+                            <li><i class="fas fa-file"></i> Livrable 1 : Forces et repères (non évalué)</li>
+                            <li><i class="fas fa-file"></i> Livrable 2 : Modèles mathématiques (équations du mouvement)</li>
+                            <li><i class="fas fa-file"></i> Livrable 3 : Simulation Python (vitesses, trajectoires, temps)</li>
+                            <li><i class="fas fa-file"></i> Soutenance : choix de la voiture et améliorations</li>
+                        </ul>
+                        
+                        <h4>Concepts</h4>
+                        <ul>
+                            <li><i class="fas fa-calculator"></i> Lois de Newton, énergies mécanique/cinétique/potentielle</li>
+                            <li><i class="fas fa-calculator"></i> Calcul intégral, trigonométrie, vecteurs</li>
+                            <li><i class="fas fa-calculator"></i> Frottements sol/air, vitesse minimale looping/ravin</li>
+                        </ul>
+                    `;
+                    break;
+            }
+            
+            consigneDiv.innerHTML = content;
+            modal.style.display = 'flex';
+        }
+
+        function hideConsigne() {
+            document.getElementById('consigneModal').style.display = 'none';
+        }
+
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideConsigne();
+            }
+        });
+    </script>
+</body>
+</html>
