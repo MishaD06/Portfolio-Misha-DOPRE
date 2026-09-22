@@ -5,7 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact — Misha Dopre</title>
-    <meta name="description" content="Contacter Misha Dopre, étudiant à CESI Nice - Stage Avril 2026">
+    <meta name="description" content="Contacter Misha Dopre, étudiant à CESI Nice - Stage Janvier 2027">
+    <script>
+        (function() {
+            try {
+                const urlTheme = new URLSearchParams(window.location.search).get('theme');
+                let nameTheme = null;
+                try {
+                    if (window.name) {
+                        const parsed = JSON.parse(window.name);
+                        if (parsed && (parsed.theme === 'dark' || parsed.theme === 'light')) {
+                            nameTheme = parsed.theme;
+                        }
+                    }
+                } catch (e) {}
+                const localTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = urlTheme || nameTheme || localTheme || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                try { localStorage.setItem('theme', theme); } catch (e) {}
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -118,8 +139,8 @@
                             <i class="fas fa-circle" style="color: var(--accent); font-size: 0.75rem;"></i>
                             <span style="font-weight: 600; color: var(--accent);">STAGE</span>
                         </div>
-                        <p style="color: var(--text-primary); font-weight: 500; margin-bottom: 0.25rem;">À partir du 7 avril 2026</p>
-                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Durée : 3 à 4 mois</p>
+                        <p style="color: var(--text-primary); font-weight: 500; margin-bottom: 0.25rem;">À partir du 4 janvier 2027</p>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Durée : 2 à 3 mois</p>
                         <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: var(--space-sm);">
                             Domaines : Développement logiciel, systèmes embarqués, web, réseaux, bases de données, cybersécurité, ou tout projet innovant lié à l'informatique.
                         </p>
@@ -145,7 +166,7 @@
                             <i class="fas fa-arrow-right" style="color: var(--accent);"></i>
                         </a>
 
-                        <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: var(--space-md); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; transition: all 0.2s;">
+                        <a href="https://www.linkedin.com/in/misha-dopre" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 1rem; padding: var(--space-md); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; transition: all 0.2s;">
                             <div style="background: var(--accent-soft); padding: 0.5rem; border-radius: 8px;">
                                 <i class="fab fa-linkedin-in" style="color: var(--accent); font-size: 1.25rem;"></i>
                             </div>
@@ -167,7 +188,7 @@
                 <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="LinkedIn">
+                <a href="https://www.linkedin.com/in/misha-dopre" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
                 <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="Email">

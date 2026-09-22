@@ -189,7 +189,7 @@ Coordonnées et informations de contact :
 - Email professionnel
 - Téléphone
 - LinkedIn et réseaux sociaux
-- Disponibilité pour stage (Avril 2026)
+- Disponibilité pour stage (4 janvier 2027)
 
 ### 🎮 Démo Jeu de la Vie (`game-of-life-demo/index.html`)
 Simulation interactive du Jeu de la Vie de Conway avec :

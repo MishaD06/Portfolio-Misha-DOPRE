@@ -6,6 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet citoyen — Misha Dopre</title>
     <meta name="description" content="Projet ingénieur citoyen : stand de sensibilisation au don du sang avec l'EFS">
+    <script>
+        (function() {
+            try {
+                const urlTheme = new URLSearchParams(window.location.search).get('theme');
+                let nameTheme = null;
+                try {
+                    if (window.name) {
+                        const parsed = JSON.parse(window.name);
+                        if (parsed && (parsed.theme === 'dark' || parsed.theme === 'light')) {
+                            nameTheme = parsed.theme;
+                        }
+                    }
+                } catch (e) {}
+                const localTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = urlTheme || nameTheme || localTheme || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                try { localStorage.setItem('theme', theme); } catch (e) {}
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -216,7 +237,7 @@
         <div class="project-hero">
             <div style="max-width: 800px;">
                 <div style="display: inline-block; background: rgba(255,255,255,0.2); padding: 0.25rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; margin-bottom: var(--space-md); font-family: var(--font-mono);">
-                    PROJET INGÉNIEUR CITOYEN · 2025-2026
+                    PROJET INGÉNIEUR CITOYEN · 2025-2027
                 </div>
                 <h1>Don du sang &<br>sensibilisation</h1>
                 <p class="lead">Organisation de stands de collecte et de prévention avec l'Établissement Français du Sang (EFS) sur le Campus Sud des Métiers.</p>
@@ -413,7 +434,7 @@
                 <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                <a href="https://www.linkedin.com/in/misha-dopre" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); font-size: 1.25rem;" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
                 <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem;">

@@ -6,6 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parcours — Misha Dopre</title>
     <meta name="description" content="Formation et expériences de Misha Dopre, étudiant à CESI Nice">
+    <script>
+        (function() {
+            try {
+                const urlTheme = new URLSearchParams(window.location.search).get('theme');
+                let nameTheme = null;
+                try {
+                    if (window.name) {
+                        const parsed = JSON.parse(window.name);
+                        if (parsed && (parsed.theme === 'dark' || parsed.theme === 'light')) {
+                            nameTheme = parsed.theme;
+                        }
+                    }
+                } catch (e) {}
+                const localTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = urlTheme || nameTheme || localTheme || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                try { localStorage.setItem('theme', theme); } catch (e) {}
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -60,9 +81,9 @@
 
         .cv-timeline-header {
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.35rem;
             margin-bottom: 0.5rem;
         }
 
@@ -315,20 +336,20 @@
                     
                     <div class="cv-timeline-item">
                         <div class="cv-timeline-header">
-                            <span class="cv-timeline-title">Cycle préparatoire intégré</span>
-                            <span class="cv-timeline-date">2024-2026</span>
+                            <span class="cv-timeline-title">Diplôme d'Ingénieur spécialité Informatique</span>
+                            <span class="cv-timeline-date">2024 - 2029</span>
                         </div>
-                        <div class="cv-timeline-sub">CESI École d'ingénieurs, Nice</div>
-                        <div class="cv-timeline-desc">Spécialité informatique · Programmation, bases de données, systèmes embarqués, réseaux</div>
+                        <div class="cv-timeline-sub">CESI École d’Ingénieurs, Nice, Alpes-Maritimes</div>
+                        <div class="cv-timeline-desc">Cursus anglophone</div>
                     </div>
 
                     <div class="cv-timeline-item" style="margin-bottom: 0;">
                         <div class="cv-timeline-header">
-                            <span class="cv-timeline-title">Baccalauréat général</span>
+                            <span class="cv-timeline-title">Baccalauréat Général</span>
                             <span class="cv-timeline-date">2024</span>
                         </div>
-                        <div class="cv-timeline-sub">Lycée Dominique Villars, Gap</div>
-                        <div class="cv-timeline-desc">Mention bien · Spécialités mathématiques et physique-chimie</div>
+                        <div class="cv-timeline-sub">Lycée Dominique Villars, Gap, Hautes-Alpes</div>
+                        <div class="cv-timeline-desc">Mention bien · Spécialités Mathématiques et Physique – Chimie</div>
                     </div>
                 </div>
 
@@ -345,11 +366,11 @@
                         </div>
                         <div class="cv-lang-item">
                             <span class="cv-lang-name">Anglais</span>
-                            <span class="cv-lang-level">Niveau B1-B2</span>
+                            <span class="cv-lang-level">Opérationnel (Niveau B2) – TOEIC : 835/990</span>
                         </div>
                         <div class="cv-lang-item">
                             <span class="cv-lang-name">Italien</span>
-                            <span class="cv-lang-level">Niveau B1</span>
+                            <span class="cv-lang-level">Notions de base</span>
                         </div>
                     </div>
                 </div>
@@ -387,7 +408,7 @@
                             <i class="fab fa-github"></i>
                             GitHub
                         </a>
-                        <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" class="cv-social-btn">
+                        <a href="https://www.linkedin.com/in/misha-dopre" target="_blank" rel="noopener noreferrer" class="cv-social-btn">
                             <i class="fab fa-linkedin-in"></i>
                             LinkedIn
                         </a>
@@ -401,29 +422,31 @@
                 <div class="cv-card">
                     <h2 class="cv-section-title">
                         <i class="fas fa-briefcase"></i>
-                        Expérience
+                        Expériences professionnelles
                     </h2>
                     
+                    <!-- 1. Stage CHICAS -->
+                    <div class="cv-timeline-item">
+                        <div class="cv-timeline-header">
+                            <span class="cv-timeline-title">Stagiaire Déploiement Applicatif & Support</span>
+                            <span class="cv-timeline-date">Avril - juin 2026</span>
+                        </div>
+                        <div class="cv-timeline-sub">Centre hospitalier Intercommunal des Alpes du Sud</div>
+                        <div class="cv-timeline-desc">
+                            Participation au déploiement d'une solution SSO au sein de la DSI d'un établissement de santé public : cahiers de tests, report de bugs, ateliers utilisateurs, plan de bascule, scripts .bat. Support technique et interventions réseau (switchs, VLANs).
+                        </div>
+                    </div>
+
+                    <!-- 2. HUSSE France -->
                     <div class="cv-timeline-item" style="margin-bottom: 0;">
                         <div class="cv-timeline-header">
-                            <span class="cv-timeline-title">Husse France</span>
-                            <span class="cv-timeline-date">Étés 2024-2025</span>
+                            <span class="cv-timeline-title">Vendeur / Conseiller clientèle</span>
+                            <span class="cv-timeline-date">Étés 2024 et 2025</span>
                         </div>
-                        <div class="cv-timeline-sub">Vente / Conseil clientèle</div>
-                        <ul style="list-style: none; padding: 0; margin-top: var(--space-sm);">
-                            <li style="display: flex; gap: 0.75rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
-                                <i class="fas fa-circle" style="color: var(--accent); font-size: 0.4rem; margin-top: 0.6rem;"></i>
-                                <span>Préparation des commandes</span>
-                            </li>
-                            <li style="display: flex; gap: 0.75rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
-                                <i class="fas fa-circle" style="color: var(--accent); font-size: 0.4rem; margin-top: 0.6rem;"></i>
-                                <span>Livraison à domicile</span>
-                            </li>
-                            <li style="display: flex; gap: 0.75rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
-                                <i class="fas fa-circle" style="color: var(--accent); font-size: 0.4rem; margin-top: 0.6rem;"></i>
-                                <span>Conseils alimentaires pour animaux</span>
-                            </li>
-                        </ul>
+                        <div class="cv-timeline-sub">HUSSE France</div>
+                        <div class="cv-timeline-desc">
+                            Préparation des commandes, livraison à domicile et conseils alimentaires pour chiens, chats et chevaux.
+                        </div>
                     </div>
                 </div>
 
@@ -438,29 +461,67 @@
                         <div class="cv-skills-category">
                             <h4>
                                 <i class="fas fa-code"></i>
-                                Programmation
+                                Langages & Programmation
                             </h4>
                             <div class="cv-skills-list">
-                                <span class="cv-skill-tag">C/C++</span>
                                 <span class="cv-skill-tag">Python</span>
-                                <span class="cv-skill-tag">HTML5</span>
-                                <span class="cv-skill-tag">CSS3</span>
-                                <span class="cv-skill-tag">JavaScript</span>
-                                <span class="cv-skill-tag">PHP</span>
-                                <span class="cv-skill-tag">MySQL</span>
+                                <span class="cv-skill-tag">C/C++</span>
+                                <span class="cv-skill-tag">Algorithmique</span>
+                                <span class="cv-skill-tag">POO</span>
                             </div>
                         </div>
+
+                        <div class="cv-skills-category">
+                            <h4>
+                                <i class="fas fa-laptop-code"></i>
+                                Développement Web
+                            </h4>
+                            <div class="cv-skills-list">
+                                <span class="cv-skill-tag">HTML5 / CSS3</span>
+                                <span class="cv-skill-tag">JavaScript</span>
+                                <span class="cv-skill-tag">PHP</span>
+                            </div>
+                        </div>
+
+                        <div class="cv-skills-category">
+                            <h4>
+                                <i class="fas fa-database"></i>
+                                Bases de données
+                            </h4>
+                            <div class="cv-skills-list">
+                                <span class="cv-skill-tag">Modélisation SQL</span>
+                                <span class="cv-skill-tag">MySQL</span>
+                                <span class="cv-skill-tag">PostgreSQL</span>
+                                <span class="cv-skill-tag">SQLite</span>
+                            </div>
+                        </div>
+
                         <div class="cv-skills-category">
                             <h4>
                                 <i class="fas fa-tools"></i>
-                                Systèmes & Outils
+                                Outils & Méthodologie
                             </h4>
                             <div class="cv-skills-list">
-                                <span class="cv-skill-tag">Linux</span>
-                                <span class="cv-skill-tag">Arduino</span>
-                                <span class="cv-skill-tag">Cisco</span>
+                                <span class="cv-skill-tag">Git / GitHub</span>
+                                <span class="cv-skill-tag">Méthode Agile</span>
+                                <span class="cv-skill-tag">Cahiers de tests</span>
                                 <span class="cv-skill-tag">Excel</span>
-                                <span class="cv-skill-tag">Git</span>
+                            </div>
+                        </div>
+
+                        <div class="cv-skills-category" style="grid-column: 1 / -1;">
+                            <h4>
+                                <i class="fas fa-network-wired"></i>
+                                Systèmes & Réseaux
+                            </h4>
+                            <div class="cv-skills-list">
+                                <span class="cv-skill-tag">Linux (Debian, RHEL, Arch)</span>
+                                <span class="cv-skill-tag">Scripting Bash</span>
+                                <span class="cv-skill-tag">Cisco CCNA</span>
+                                <span class="cv-skill-tag">Routage & Switchs</span>
+                                <span class="cv-skill-tag">VLANs</span>
+                                <span class="cv-skill-tag">Modèle OSI & TCP/IP</span>
+                                <span class="cv-skill-tag">Arduino</span>
                             </div>
                         </div>
                     </div>
@@ -497,7 +558,7 @@
                 <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem;">
+                <a href="https://www.linkedin.com/in/misha-dopre" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); font-size: 1.25rem;" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
                 <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem;">

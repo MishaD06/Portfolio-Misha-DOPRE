@@ -6,6 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projets — Misha Dopre</title>
     <meta name="description" content="Projets académiques et personnels de Misha Dopre, étudiant à CESI Nice">
+    <script>
+        (function() {
+            try {
+                const urlTheme = new URLSearchParams(window.location.search).get('theme');
+                let nameTheme = null;
+                try {
+                    if (window.name) {
+                        const parsed = JSON.parse(window.name);
+                        if (parsed && (parsed.theme === 'dark' || parsed.theme === 'light')) {
+                            nameTheme = parsed.theme;
+                        }
+                    }
+                } catch (e) {}
+                const localTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = urlTheme || nameTheme || localTheme || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                try { localStorage.setItem('theme', theme); } catch (e) {}
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,6 +44,7 @@
             border-radius: var(--radius);
             padding: var(--space-xl);
             transition: all 0.2s var(--ease);
+            scroll-margin-top: 100px;
         }
 
         .project-card:hover {
@@ -30,8 +52,18 @@
             box-shadow: 0 8px 20px rgba(45,106,79,0.08);
         }
 
+        .project-card:target {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.25);
+        }
+
         [data-theme="dark"] .project-card:hover {
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        [data-theme="dark"] .project-card:target {
+            border-color: var(--accent-light);
+            box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.35);
         }
 
         .project-header {
@@ -281,11 +313,11 @@
         <!-- GRILLE PROJETS -->
         <div class="projects-grid">
 
-            
-            <div class="project-card">
+            <!-- 1. Plateforme de stages -->
+            <div class="project-card" id="plateforme-stages">
                 <div class="project-header">
                     <h2 class="project-title">Plateforme de gestion de stages</h2>
-                    <span class="project-date project-date-en-cours">EN COURS · 2026</span>
+                    <span class="project-date">2026 · TERMINÉ</span>
                 </div>
                 <div class="project-subtitle">Architecture MVC · PHP/MySQL · Projet de développement web</div>
                 <div class="project-description">
@@ -293,17 +325,17 @@
                     <p style="color: var(--text-muted);">Stack : PHP POO, MySQL, HTML5/CSS3, JavaScript. Architecture MVC, responsive design, SEO, sécurité.</p>
                 </div>
                 <div class="project-buttons">
-                    <span class="btn-project btn-disabled" style="background: var(--bg-card);">
-                        <i class="fab fa-github"></i> GitHub (projet encore en cours)
-                    </span>
+                    <a href="https://github.com/MishaD06/Projet-dev-web-Web4All" target="_blank" rel="noopener noreferrer" class="btn-project btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
                     <button onclick="showConsigne('web')" class="btn-project">
                         <i class="fas fa-file-alt"></i> Consigne
                     </button>
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 2. Portfolio -->
+            <div class="project-card" id="portfolio">
                 <div class="project-header">
                     <h2 class="project-title">Portfolio — Site personnel</h2>
                     <span class="project-date">2026 · TERMINÉ</span>
@@ -320,8 +352,8 @@
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 3. FunkyTown -->
+            <div class="project-card" id="funkytown">
                 <div class="project-header">
                     <h2 class="project-title">FunkyTown – Infrastructure réseau</h2>
                     <span class="project-date">2026 · TERMINÉ</span>
@@ -341,8 +373,8 @@
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 4. Jeu de la vie -->
+            <div class="project-card" id="jeu-de-la-vie">
                 <div class="project-header">
                     <h2 class="project-title">Jeu de la vie – Conway</h2>
                     <span class="project-date">2025 · TERMINÉ</span>
@@ -365,8 +397,8 @@
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 5. Calculatrice -->
+            <div class="project-card" id="calculatrice">
                 <div class="project-header">
                     <h2 class="project-title">Calculatrice parenthésée</h2>
                     <span class="project-date">2025 · TERMINÉ</span>
@@ -386,8 +418,8 @@
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 6. Station météo -->
+            <div class="project-card" id="station-meteo">
                 <div class="project-header">
                     <h2 class="project-title">Station météo embarquée</h2>
                     <span class="project-date">2025 · TERMINÉ</span>
@@ -407,8 +439,8 @@
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 7. Qualité de l'air -->
+            <div class="project-card" id="qualite-air">
                 <div class="project-header">
                     <h2 class="project-title">Qualité de l'air</h2>
                     <span class="project-date">2025 · TERMINÉ</span>
@@ -428,8 +460,8 @@
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 8. Escape No Game -->
+            <div class="project-card" id="escape-no-game">
                 <div class="project-header">
                     <h2 class="project-title">Escape No Game</h2>
                     <span class="project-date">2025 · TERMINÉ</span>
@@ -449,8 +481,8 @@
                 </div>
             </div>
 
-            
-            <div class="project-card">
+            <!-- 9. Fast & Furious -->
+            <div class="project-card" id="fast-and-furious">
                 <div class="project-header">
                     <h2 class="project-title">Fast & Furious</h2>
                     <span class="project-date">2024 · TERMINÉ</span>
@@ -492,7 +524,7 @@
                 <a href="https://github.com/MishaD06" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/misha-dopre-b16b2b337/" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="LinkedIn">
+                <a href="https://www.linkedin.com/in/misha-dopre" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
                 <a href="mailto:misha.dopre@viacesi.fr" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" title="Email">
@@ -506,48 +538,8 @@
         </div>
     </footer>
 
+    <script src="js/script.js"></script>
     <script>
-        
-        const themeSwitch = document.querySelector('.theme-switch');
-        const htmlElement = document.documentElement;
-        const lightIcon = document.querySelector('.fa-sun');
-        const darkIcon = document.querySelector('.fa-moon');
-
-        function setTheme(theme) {
-            if (theme === 'dark') {
-                htmlElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                lightIcon?.classList.remove('active');
-                darkIcon?.classList.add('active');
-            } else {
-                htmlElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-                darkIcon?.classList.remove('active');
-                lightIcon?.classList.add('active');
-            }
-        }
-
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        setTheme(savedTheme);
-
-        if (themeSwitch) {
-            themeSwitch.addEventListener('click', () => {
-                const currentTheme = htmlElement.getAttribute('data-theme');
-                setTheme(currentTheme === 'light' ? 'dark' : 'light');
-            });
-        }
-
-        
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-
-        if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-        }
-
-        
         function showConsigne(projet) {
             const modal = document.getElementById('consigneModal');
             const consigneDiv = document.getElementById('consigneText');
@@ -558,7 +550,7 @@
                 case 'web':
                     content = `
                         <h3>📋 Plateforme de gestion de stages</h3>
-                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Développement web · 2026 (en cours)</p>
+                        <p style="color: var(--accent); font-weight: 600; margin-bottom: var(--space-md);">Développement web · 2026 (terminé)</p>
                         
                         <h4>Contexte</h4>
                         <p>Réalisation d'un site web pour regrouper les offres de stage et faciliter la mise en relation entre étudiants, entreprises et pilotes de promotion.</p>
